@@ -1,0 +1,115 @@
+{
+  "author": "Ryuichiro Semba",
+  "bin": {
+    "webpify": "dist/index.js"
+  },
+  "bugs": {
+    "url": "https://github.com/semba-yui/webpify/issues"
+  },
+  "dependencies": {
+    "commander": "catalog:",
+    "sharp": "catalog:"
+  },
+  "description": "CLI tool to convert images to WebP format",
+  "devDependencies": {
+    "@biomejs/biome": "catalog:",
+    "@commitlint/cli": "catalog:",
+    "@commitlint/config-conventional": "catalog:",
+    "@fast-check/vitest": "catalog:",
+    "@secretlint/secretlint-rule-preset-recommend": "catalog:",
+    "@stryker-mutator/core": "catalog:",
+    "@stryker-mutator/typescript-checker": "catalog:",
+    "@stryker-mutator/vitest-runner": "catalog:",
+    "@types/node": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "dependency-cruiser": "catalog:",
+    "fast-check": "catalog:",
+    "lefthook": "catalog:",
+    "remark": "catalog:",
+    "remark-cli": "catalog:",
+    "remark-frontmatter": "catalog:",
+    "remark-gfm": "catalog:",
+    "remark-lint": "catalog:",
+    "remark-preset-lint-consistent": "catalog:",
+    "remark-preset-lint-recommended": "catalog:",
+    "remark-toc": "catalog:",
+    "secretlint": "catalog:",
+    "ts-node": "catalog:",
+    "typedoc": "catalog:",
+    "typedoc-plugin-merge-modules": "catalog:",
+    "typedoc-theme-hierarchy": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "onFail": "download",
+      "version": ">=24.11.0"
+    }
+  },
+  "engines": {
+    "runtime": {
+      "name": "node",
+      "onFail": "download",
+      "version": "^24.11.0"
+    }
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/semba-yui/webpify#readme",
+  "keywords": [
+    "cli",
+    "converter",
+    "gif",
+    "image",
+    "image-processing",
+    "jpeg",
+    "jpg",
+    "optimization",
+    "png",
+    "sharp",
+    "webp"
+  ],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "name": "@semba-ryuichiro/webpify",
+  "packageManager": "pnpm@10.26.2",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/semba-yui/webpify.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "deps": "dependency-cruiser src --config .dependency-cruiser.cjs",
+    "deps:graph": "dependency-cruiser src --config .dependency-cruiser.cjs --output-type dot | dot -T svg > dependency-graph.svg",
+    "dev": "tsc --watch",
+    "docs:gen": "typedoc",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "lint:md": "remark . --quiet",
+    "lint:md:fix": "remark . --quiet --output",
+    "lint:secret": "secretlint \"**/*\"",
+    "prepublishOnly": "pnpm run lint && pnpm run test && pnpm run build",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:mutation": "stryker run",
+    "test:mutation:dry": "stryker run --dryRunOnly",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "version": "1.0.0"
+}

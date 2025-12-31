@@ -1,0 +1,10 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/adapters/index.ts", "src/core/index.ts", "src/ports/index.ts", "src/types/index.ts"],
+  "excludePrivate": true,
+  "excludeProtected": false,
+  "includeVersion": true,
+  "out": "api-docs",
+  "plugin": ["typedoc-plugin-merge-modules", "typedoc-theme-hierarchy"],
+  "theme": "hierarchy"
+}
