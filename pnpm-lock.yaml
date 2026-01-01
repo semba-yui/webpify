@@ -43,7 +43,7 @@ catalogs:
       specifier: 17.3.5
       version: 17.3.5
     fast-check:
-      specifier: ^4.5.3
+      specifier: 4.5.3
       version: 4.5.3
     lefthook:
       specifier: 2.0.13
