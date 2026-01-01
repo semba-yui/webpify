@@ -21,13 +21,13 @@
 - **Findings**:
   - sharp は libvips を使用し、ImageMagick/GraphicsMagick より 4-5 倍高速
   - PNG、JPEG、GIF、WebP、AVIF、TIFF をサポート
-  - Node.js 24 以上が必要
+  - Node.js 22 以上が必要
   - 最新バージョン: 0.34.5
   - 非同期処理に対応し、Promise/async-await をサポート
   - メモリ効率が良く、大きな画像も小さなメモリフットプリントで処理可能
 - **Implications**:
   - sharp を画像処理のコアライブラリとして採用
-  - Node.js 24 LTS を推奨ランタイムとして設定
+  - Node.js 22 LTS を推奨ランタイムとして設定
 
 ### CLI フレームワークの選定
 

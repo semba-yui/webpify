@@ -92,7 +92,7 @@ graph TB
 |-------|------------------|-----------------|-------|
 | CLI | Commander.js 13.x | 引数パース、ヘルプ生成 | 軽量で TypeScript 対応 |
 | Image Processing | sharp 0.34.x | WebP 変換、メタデータ取得 | libvips ベースの高速処理 |
-| Runtime | Node.js 24 LTS | 実行環境 | sharp の要件を満たす |
+| Runtime | Node.js 22 LTS | 実行環境 | sharp の要件を満たす |
 | Build | TypeScript 5.x | 型安全なコンパイル | strict モード |
 | Testing | vitest 4.x | ユニット/統合テスト | 高速、ESM ネイティブ対応 |
 | Package Manager | pnpm 10.26.2 | 依存関係管理 | steering で指定済み |

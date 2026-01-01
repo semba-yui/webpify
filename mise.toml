@@ -1,7 +1,7 @@
 [tools]
 actionlint = "latest"
 ghalint = "latest"
-node = "24.11.0"
+node = "22"
 pnpm = "10.26.2"
 yamllint = "latest"
 zizmor = "latest"

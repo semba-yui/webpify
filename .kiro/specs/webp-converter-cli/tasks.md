@@ -3,7 +3,7 @@
 ## Task 1: プロジェクト基盤のセットアップ
 
 - [x] 1.1 TypeScript プロジェクトの初期化
-  - Node.js 20 LTS 向けの TypeScript 設定（strict モード有効）
+  - Node.js 22 LTS 向けの TypeScript 設定（strict モード有効）
   - pnpm によるパッケージ管理の設定
   - ビルドスクリプトの設定（tsc によるコンパイル）
   - _Requirements: なし（技術基盤）_

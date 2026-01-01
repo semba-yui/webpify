@@ -1,7 +1,7 @@
 # webpify
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Node.js Version](https://img.shields.io/badge/node-%3E%3D24.0.0-brightgreen)](https://nodejs.org/)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D22.0.0-brightgreen)](https://nodejs.org/)
 
 画像ファイル（PNG/JPEG/GIF）を WebP 形式に変換する CLI ツール
 
@@ -63,7 +63,7 @@ webpify ./images -r -f --quiet
 
 ## 要件
 
-- Node.js 24.0.0 以上
+- Node.js 22.0.0 以上
 
 ## ライセンス
 
