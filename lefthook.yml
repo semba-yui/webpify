@@ -25,5 +25,28 @@ pre-push:
     - name: biome
       run: pnpm lint
 
+    - name: secretlint
+      run: pnpm lint:secret
+
+    - name: remark
+      glob: "*.md"
+      run: pnpm lint:md
+
+    - name: yamllint
+      glob: "*.{yml,yaml}"
+      run: pnpm lint:yaml
+
+    - name: actionlint
+      glob: ".github/workflows/*.{yml,yaml}"
+      run: pnpm lint:actions
+
+    - name: ghalint
+      glob: ".github/workflows/*.{yml,yaml}"
+      run: pnpm lint:gha
+
+    - name: zizmor
+      glob: ".github/workflows/*.{yml,yaml}"
+      run: pnpm lint:zizmor
+
     - name: typecheck
       run: pnpm typecheck
