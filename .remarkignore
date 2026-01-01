@@ -46,6 +46,7 @@ storybook-static
 
 # AI
 .ai
+.claude
 
 # SDD
 .kiro

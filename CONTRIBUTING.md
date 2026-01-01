@@ -19,16 +19,16 @@ pnpm install
 
 ## 開発コマンド
 
-| コマンド | 説明 |
-|---------|------|
-| `pnpm build` | TypeScript をコンパイル |
-| `pnpm dev` | ファイル変更を監視してコンパイル |
-| `pnpm test` | テスト実行 |
-| `pnpm test:watch` | テスト監視モード |
-| `pnpm test:coverage` | カバレッジ測定 |
-| `pnpm lint` | リント実行 |
-| `pnpm lint:fix` | リント自動修正 |
-| `pnpm typecheck` | 型チェック |
+| コマンド                 | 説明                |
+| -------------------- | ----------------- |
+| `pnpm build`         | TypeScript をコンパイル |
+| `pnpm dev`           | ファイル変更を監視してコンパイル  |
+| `pnpm test`          | テスト実行             |
+| `pnpm test:watch`    | テスト監視モード          |
+| `pnpm test:coverage` | カバレッジ測定           |
+| `pnpm lint`          | リント実行             |
+| `pnpm lint:fix`      | リント自動修正           |
+| `pnpm typecheck`     | 型チェック             |
 
 ## コーディング規約
 
