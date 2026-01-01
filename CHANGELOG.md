@@ -4,6 +4,14 @@
 
 形式は [Keep a Changelog](https://keepachangelog.com/ja/1.1.0/) に基づいています。
 
+## \[1.0.6] - 2026-01-01
+
+### Fixed
+
+- CI 環境で E2E テストが失敗する問題に対応
+- Node.js 22.11 互換性のため dependency-cruiser をダウングレード
+- pnpm lockfile の catalog 設定を修正
+
 ## \[1.0.5] - 2026-01-01
 
 ### Added
