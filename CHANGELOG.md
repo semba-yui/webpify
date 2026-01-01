@@ -4,6 +4,20 @@
 
 形式は [Keep a Changelog](https://keepachangelog.com/ja/1.1.0/) に基づいています。
 
+## [1.0.5] - 2026-01-01
+
+### Added
+
+- CI/CD パイプライン（GitHub Actions）
+  - ビルド、テスト、リントの自動化
+  - npm への自動公開
+  - Claude Code 統合
+  - Claude Code Review
+- dependabot による依存関係の自動更新
+- lefthook による Git フックの設定
+- SonarQube 設定
+- ユニットテストケースの追加
+
 ## [1.0.4] - 2026-01-01
 
 ### Changed
