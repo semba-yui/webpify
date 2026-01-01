@@ -17,7 +17,7 @@
 ## インストール
 
 ```bash
-npm install -g webpify
+pnpm add -g @semba-ryuichiro/webpify
 ```
 
 ## 使い方
