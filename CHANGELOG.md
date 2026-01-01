@@ -4,6 +4,30 @@
 
 形式は [Keep a Changelog](https://keepachangelog.com/ja/1.1.0/) に基づいています。
 
+## [1.0.4] - 2026-01-01
+
+### Changed
+
+- Node.js の最低サポートバージョンを 22 系へダウングレード
+
+## [1.0.3] - 2026-01-01
+
+### Fixed
+
+- devEngines が pnpm publish 時に誤変換される問題を修正（devEngines を削除）
+
+## [1.0.2] - 2026-01-01
+
+### Fixed
+
+- npm error "Unsupported URL Type runtime:" エラーを修正
+
+## [1.0.1] - 2026-01-01
+
+### Fixed
+
+- pnpm catalog 対応
+
 ## [1.0.0] - 2026-01-01
 
 ### Added

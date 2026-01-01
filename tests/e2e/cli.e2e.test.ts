@@ -202,7 +202,7 @@ describe('CLI E2E', () => {
       const { stderr, exitCode } = await runCli([inputPath, '-q', '101']);
 
       // Then: エラーが表示される
-      expect(stderr).toContain('Quality must be between 1 and 100');
+      expect(stderr).toContain('品質は 1 から 100 の間で指定してください');
       expect(exitCode).toBe(1);
     });
   });

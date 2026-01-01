@@ -370,7 +370,7 @@ describe('ArgumentParser', () => {
         // Then
         expect(mockStderr).toHaveBeenCalled();
         const output = mockStderr.mock.calls.map((call) => call[0]).join('');
-        expect(output).toContain('Quality must be between 1 and 100');
+        expect(output).toContain('品質は 1 から 100 の間で指定してください');
         expect(mockExit).toHaveBeenCalledWith(1);
       });
     });
@@ -387,7 +387,7 @@ describe('ArgumentParser', () => {
         // Then
         expect(mockStderr).toHaveBeenCalled();
         const output = mockStderr.mock.calls.map((call) => call[0]).join('');
-        expect(output).toContain('Quality must be between 1 and 100');
+        expect(output).toContain('品質は 1 から 100 の間で指定してください');
         expect(mockExit).toHaveBeenCalledWith(1);
       });
     });
@@ -405,7 +405,7 @@ describe('ArgumentParser', () => {
         // Then
         expect(mockStderr).toHaveBeenCalled();
         const output = mockStderr.mock.calls.map((call) => call[0]).join('');
-        expect(output).toContain('Quality must be between 1 and 100');
+        expect(output).toContain('品質は 1 から 100 の間で指定してください');
         expect(mockExit).toHaveBeenCalledWith(1);
       });
     });
@@ -422,7 +422,7 @@ describe('ArgumentParser', () => {
         // Then
         expect(mockStderr).toHaveBeenCalled();
         const output = mockStderr.mock.calls.map((call) => call[0]).join('');
-        expect(output).toContain('Quality must be between 1 and 100');
+        expect(output).toContain('品質は 1 から 100 の間で指定してください');
         expect(mockExit).toHaveBeenCalledWith(1);
       });
     });
@@ -471,7 +471,7 @@ describe('ArgumentParser', () => {
         // Then
         expect(mockStderr).toHaveBeenCalled();
         const output = mockStderr.mock.calls.map((call) => call[0]).join('');
-        expect(output).toContain('Quality must be between 1 and 100');
+        expect(output).toContain('品質は 1 から 100 の間で指定してください');
         expect(mockExit).toHaveBeenCalledWith(1);
       });
     });

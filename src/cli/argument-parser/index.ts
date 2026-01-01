@@ -53,7 +53,7 @@ function parseQuality(value: string): number {
   const quality = Number.parseInt(value, 10);
 
   if (Number.isNaN(quality) || quality < MIN_QUALITY || quality > MAX_QUALITY) {
-    process.stderr.write(`error: Quality must be between ${MIN_QUALITY} and ${MAX_QUALITY}\n`);
+    process.stderr.write(`エラー: 品質は ${MIN_QUALITY} から ${MAX_QUALITY} の間で指定してください\n`);
     process.exit(1);
   }
 
@@ -69,15 +69,15 @@ export function createArgumentParser(): ArgumentParserService {
 
   program
     .name('webpify')
-    .description('CLI tool to convert images to WebP format')
-    .version(VERSION, '-v, --version', 'Show version number')
-    .argument('[input]', 'Input file or directory path')
-    .option('-o, --output <path>', 'Output path')
-    .option('-q, --quality <number>', 'Quality level (1-100)', parseQuality, DEFAULT_QUALITY)
-    .option('-r, --recursive', 'Process directories recursively', false)
-    .option('-f, --force', 'Overwrite existing files', false)
-    .option('--quiet', 'Silent mode (no output)', false)
-    .option('--list', 'List WebP files with size information', false)
+    .description('画像を WebP 形式に変換する CLI ツール')
+    .version(VERSION, '-v, --version', 'バージョン番号を表示')
+    .argument('[input]', '入力ファイルまたはディレクトリのパス')
+    .option('-o, --output <path>', '出力パス')
+    .option('-q, --quality <number>', '品質レベル (1-100)', parseQuality, DEFAULT_QUALITY)
+    .option('-r, --recursive', 'ディレクトリを再帰的に処理', false)
+    .option('-f, --force', '既存ファイルを上書き', false)
+    .option('--quiet', 'サイレントモード（出力なし）', false)
+    .option('--list', 'WebP ファイルをサイズ情報付きで一覧表示', false)
     .configureOutput({
       writeErr: (str) => process.stderr.write(str),
       writeOut: (str) => process.stdout.write(str),
