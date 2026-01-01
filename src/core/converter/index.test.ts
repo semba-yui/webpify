@@ -202,6 +202,29 @@ describe('Converter', () => {
       expect(mockFileSystem.mkdir).toHaveBeenCalledWith('/nonexistent/output');
     });
 
+    // 出力ディレクトリが既に存在する場合は mkdir を呼ばないテスト
+    it('出力先ディレクトリが既に存在する場合は mkdir を呼ばない', async () => {
+      // Given: 入力ファイルと出力先ディレクトリの両方が存在する
+      vi.mocked(mockFileSystem.exists).mockImplementation(async (path) => {
+        // 入力ファイル: /images/photo.png
+        // 出力先ディレクトリ: /output
+        // 出力ファイル: /output/photo.webp（存在しない）
+        return path === '/images/photo.png' || path === '/output';
+      });
+      vi.mocked(mockFileSystem.stat).mockResolvedValue({ size: 2048 });
+      vi.mocked(mockImageProcessor.convertToWebP).mockResolvedValue({ size: 1024 });
+
+      // When: 既に存在する出力先を指定して変換を実行する
+      await converter.convert('/images/photo.png', {
+        force: false,
+        output: '/output',
+        quality: 80,
+      });
+
+      // Then: mkdir は呼ばれない
+      expect(mockFileSystem.mkdir).not.toHaveBeenCalled();
+    });
+
     // 品質パラメータが正しく渡されるテスト
     it('品質パラメータが ImageProcessor に正しく渡される', async () => {
       // Given: 入力ファイルが存在し、出力ファイルは存在しない

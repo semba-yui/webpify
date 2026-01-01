@@ -82,19 +82,21 @@ describe('SharpAdapter', () => {
     // 品質パラメータが適用されることをテスト
     it('品質パラメータが出力に適用される', async () => {
       // Given: 同じ入力ファイルで異なる品質設定
-      const inputPath = path.join(fixturesDir, 'sample.png');
+      // JPEG 画像は品質による差が出やすい
+      const inputPath = path.join(fixturesDir, 'sample.jpg');
       const highQualityPath = path.join(outputDir, 'sample-high-quality.webp');
       const lowQualityPath = path.join(outputDir, 'sample-low-quality.webp');
 
       // When: 高品質と低品質でそれぞれ変換
       const highQualityResult = await adapter.convertToWebP(inputPath, highQualityPath, { quality: 100 });
-      const lowQualityResult = await adapter.convertToWebP(inputPath, lowQualityPath, { quality: 10 });
+      const lowQualityResult = await adapter.convertToWebP(inputPath, lowQualityPath, { quality: 1 });
 
-      // Then: 低品質の方がファイルサイズが小さい（通常の場合）
-      // 注: 画像が単純な場合はこの関係が成り立たない可能性があるため、
-      // どちらも正常に変換されることを確認
+      // Then: 異なる品質設定で異なるファイルサイズが生成される
+      // 品質パラメータが正しく適用されていることを検証
       expect(highQualityResult.size).toBeGreaterThan(0);
       expect(lowQualityResult.size).toBeGreaterThan(0);
+      // 品質パラメータが効果を持つことを確認（サイズが異なる）
+      expect(highQualityResult.size).not.toBe(lowQualityResult.size);
     });
 
     // 存在しないファイルでエラーが発生することをテスト
