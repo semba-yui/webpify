@@ -40,8 +40,8 @@ catalogs:
       specifier: 14.0.2
       version: 14.0.2
     dependency-cruiser:
-      specifier: 17.3.5
-      version: 17.3.5
+      specifier: 17.2.0
+      version: 17.2.0
     fast-check:
       specifier: 4.5.3
       version: 4.5.3
@@ -140,7 +140,7 @@ importers:
         version: 4.0.16(vitest@4.0.16(@types/node@25.0.3)(jiti@2.6.1)(yaml@2.8.2))
       dependency-cruiser:
         specifier: 'catalog:'
-        version: 17.3.5
+        version: 17.2.0
       fast-check:
         specifier: 'catalog:'
         version: 4.5.3
@@ -1582,8 +1582,8 @@ packages:
   decode-named-character-reference@1.2.0:
     resolution: {integrity: sha512-c6fcElNV6ShtZXmsgNgFFV5tVX2PaV4g+MOAkb8eXHvn6sryJBrZa9r0zV6+dtTyoCKxtDy5tyQ5ZwQuidtd+Q==}
 
-  dependency-cruiser@17.3.5:
-    resolution: {integrity: sha512-eAkyhfopzKfwes9ZZcuTPtrAJrdSRX1ASnRbgCN5Dvf69XshhGspRDUGhO6ugqKZyyVfEm8IF81UFWMTEzGXCw==}
+  dependency-cruiser@17.2.0:
+    resolution: {integrity: sha512-EiOkB41fdAOCef3ycMX4pAXqkWrCOQ+G4IKOjcs9uPILShAuki2fHlTQPnv4aIHka/3lGJJdpRVrrwTMD7v1dg==}
     engines: {node: ^20.12||^22||>=24}
     hasBin: true
 
@@ -3181,9 +3181,9 @@ packages:
   walk-up-path@3.0.1:
     resolution: {integrity: sha512-9YlCL/ynK3CTlrSRrDxZvUauLzAswPCrsaCgilqFevUYpeEW0/3ScEjaa3kbW/T0ghhkEr7mv+fpjqn1Y1YuTA==}
 
-  watskeburt@5.0.0:
-    resolution: {integrity: sha512-fEMhfIzu9WOuAJdDcTT+aPjn0JHI2+UeJ+zWSEs/tgMvc+MFDZVmhlZ8C1uJWXax1ETYc4trUnHFHyx2DrG0jQ==}
-    engines: {node: ^20.12||^22.13||>=24.0}
+  watskeburt@4.2.3:
+    resolution: {integrity: sha512-uG9qtQYoHqAsnT711nG5iZc/8M5inSmkGCOp7pFaytKG2aTfIca7p//CjiVzAE4P7hzaYuCozMjNNaLgmhbK5g==}
+    engines: {node: ^18||>=20}
     hasBin: true
 
   weapon-regex@1.3.6:
@@ -4662,13 +4662,14 @@ snapshots:
     dependencies:
       character-entities: 2.0.2
 
-  dependency-cruiser@17.3.5:
+  dependency-cruiser@17.2.0:
     dependencies:
       acorn: 8.15.0
       acorn-jsx: 5.3.2(acorn@8.15.0)
       acorn-jsx-walk: 2.0.0
       acorn-loose: 8.5.2
       acorn-walk: 8.3.4
+      ajv: 8.17.1
       commander: 14.0.2
       enhanced-resolve: 5.18.4
       ignore: 7.0.5
@@ -4682,7 +4683,7 @@ snapshots:
       safe-regex: 2.1.1
       semver: 7.7.3
       tsconfig-paths-webpack-plugin: 4.2.0
-      watskeburt: 5.0.0
+      watskeburt: 4.2.3
 
   dequal@2.0.3: {}
 
@@ -6744,7 +6745,7 @@ snapshots:
 
   walk-up-path@3.0.1: {}
 
-  watskeburt@5.0.0: {}
+  watskeburt@4.2.3: {}
 
   weapon-regex@1.3.6: {}
 
