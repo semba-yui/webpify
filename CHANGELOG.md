@@ -1,4 +1,18 @@
-# 変更履歴
+# Changelog
+
+## [1.1.0](https://github.com/semba-yui/webpify/compare/v1.0.8...v1.1.0) (2026-01-02)
+
+
+### Features
+
+* --list オプションで相対パスを表示し --absolute オプションを追加 ([#3](https://github.com/semba-yui/webpify/issues/3)) ([d680ca2](https://github.com/semba-yui/webpify/commit/d680ca26280dfa60115fc5e2a81179dc790c1171))
+
+
+### Bug Fixes
+
+* pnpm publish ([1736b64](https://github.com/semba-yui/webpify/commit/1736b64969f82004fd17b44ad012c216951e53e6))
+
+## 変更履歴
 
 すべての重要な変更はこのファイルに記録されます。
 
