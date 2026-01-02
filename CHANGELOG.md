@@ -1,4 +1,13 @@
-# 変更履歴
+# Changelog
+
+## [1.2.0](https://github.com/semba-yui/webpify/compare/v1.1.0...v1.2.0) (2026-01-02)
+
+
+### Features
+
+* --lossless オプションを追加（可逆圧縮モード） ([#5](https://github.com/semba-yui/webpify/issues/5)) ([2a8043e](https://github.com/semba-yui/webpify/commit/2a8043e266ac6a455fb58c94680071ba1355222e))
+
+## 変更履歴
 
 すべての重要な変更はこのファイルに記録されます。
 
