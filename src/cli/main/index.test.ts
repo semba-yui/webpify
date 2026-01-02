@@ -93,6 +93,7 @@ describe('main', () => {
      */
     it('should return exit code 0 when input is empty', async () => {
       const options: ParsedOptions = {
+        absolutePath: false,
         force: false,
         input: '',
         list: false,
@@ -114,6 +115,7 @@ describe('main', () => {
      */
     it('should execute list mode when --list option is specified', async () => {
       const options: ParsedOptions = {
+        absolutePath: false,
         force: false,
         input: './images',
         list: true,
@@ -149,6 +151,7 @@ describe('main', () => {
      */
     it('should execute single file conversion mode when file path is specified', async () => {
       const options: ParsedOptions = {
+        absolutePath: false,
         force: false,
         input: './image.png',
         list: false,
@@ -185,6 +188,7 @@ describe('main', () => {
      */
     it('should execute directory conversion mode when directory path is specified', async () => {
       const options: ParsedOptions = {
+        absolutePath: false,
         force: false,
         input: './images',
         list: false,
@@ -225,6 +229,7 @@ describe('main', () => {
      */
     it('should return exit code 1 when input path does not exist', async () => {
       const options: ParsedOptions = {
+        absolutePath: false,
         force: false,
         input: './nonexistent',
         list: false,
@@ -253,6 +258,7 @@ describe('main', () => {
      */
     it('should return exit code 1 when conversion has errors', async () => {
       const options: ParsedOptions = {
+        absolutePath: false,
         force: false,
         input: './image.png',
         list: false,
@@ -284,6 +290,7 @@ describe('main', () => {
      */
     it('should return exit code 0 with warning when no files to convert', async () => {
       const options: ParsedOptions = {
+        absolutePath: false,
         force: false,
         input: './images',
         list: false,
@@ -313,6 +320,7 @@ describe('main', () => {
      */
     it('should scan recursively when --recursive option is specified', async () => {
       const options: ParsedOptions = {
+        absolutePath: false,
         force: false,
         input: './images',
         list: false,
@@ -350,6 +358,7 @@ describe('main', () => {
      */
     it('should pass quiet option to reporter', async () => {
       const options: ParsedOptions = {
+        absolutePath: false,
         force: false,
         input: './image.png',
         list: false,
@@ -380,6 +389,7 @@ describe('main', () => {
      */
     it('should display single file info when --list option is specified for a file', async () => {
       const options: ParsedOptions = {
+        absolutePath: false,
         force: false,
         input: './image.webp',
         list: true,
@@ -404,14 +414,75 @@ describe('main', () => {
 
       expect(exitCode).toBe(0);
       expect(mockImageInspector.getInfo).toHaveBeenCalledWith('./image.webp');
-      expect(mockReporter.reportImageList).toHaveBeenCalledWith([
-        {
-          height: 600,
-          path: './image.webp',
-          size: 1024,
-          width: 800,
-        },
-      ]);
+      expect(mockReporter.reportImageList).toHaveBeenCalledWith(
+        [
+          {
+            height: 600,
+            path: './image.webp',
+            size: 1024,
+            width: 800,
+          },
+        ],
+        expect.any(String),
+      );
+    });
+
+    /**
+     * Given: --list --absolute オプションが指定された場合
+     * When: run を呼び出す
+     * Then: reportImageList に basePath が渡されない（絶対パス表示）
+     */
+    it('should pass undefined basePath to reportImageList when --absolute is specified', async () => {
+      const options: ParsedOptions = {
+        absolutePath: true,
+        force: false,
+        input: './images',
+        list: true,
+        quality: 80,
+        quiet: false,
+        recursive: false,
+      };
+      mockArgumentParser.parse.mockReturnValue(options);
+      mockFileScanner.exists.mockResolvedValue(true);
+      mockFileScanner.isDirectory.mockResolvedValue(true);
+      mockFileScanner.scan.mockResolvedValue(['image1.webp']);
+
+      const imageInfos: ImageInfo[] = [{ format: 'webp', height: 600, path: 'image1.webp', size: 1024, width: 800 }];
+      mockImageInspector.getInfoBatch.mockResolvedValue(imageInfos);
+
+      const exitCode = await main.run(['node', 'webpify', '--list', '--absolute', './images']);
+
+      expect(exitCode).toBe(0);
+      expect(mockReporter.reportImageList).toHaveBeenCalledWith(expect.any(Array), undefined);
+    });
+
+    /**
+     * Given: --list オプションが指定され absolutePath が false の場合
+     * When: run を呼び出す
+     * Then: reportImageList に basePath が渡される（相対パス表示）
+     */
+    it('should pass basePath to reportImageList when --absolute is not specified', async () => {
+      const options: ParsedOptions = {
+        absolutePath: false,
+        force: false,
+        input: './images',
+        list: true,
+        quality: 80,
+        quiet: false,
+        recursive: false,
+      };
+      mockArgumentParser.parse.mockReturnValue(options);
+      mockFileScanner.exists.mockResolvedValue(true);
+      mockFileScanner.isDirectory.mockResolvedValue(true);
+      mockFileScanner.scan.mockResolvedValue(['image1.webp']);
+
+      const imageInfos: ImageInfo[] = [{ format: 'webp', height: 600, path: 'image1.webp', size: 1024, width: 800 }];
+      mockImageInspector.getInfoBatch.mockResolvedValue(imageInfos);
+
+      const exitCode = await main.run(['node', 'webpify', '--list', './images']);
+
+      expect(exitCode).toBe(0);
+      expect(mockReporter.reportImageList).toHaveBeenCalledWith(expect.any(Array), expect.any(String));
     });
 
     /**
@@ -421,6 +492,7 @@ describe('main', () => {
      */
     it('should call progress callback during directory conversion', async () => {
       const options: ParsedOptions = {
+        absolutePath: false,
         force: false,
         input: './images',
         list: false,
@@ -473,6 +545,7 @@ describe('main', () => {
      */
     it('should suppress progress and stats in quiet mode for directory conversion', async () => {
       const options: ParsedOptions = {
+        absolutePath: false,
         force: false,
         input: './images',
         list: false,
@@ -524,6 +597,7 @@ describe('main', () => {
      */
     it('should return exit code 1 when directory conversion has errors', async () => {
       const options: ParsedOptions = {
+        absolutePath: false,
         force: false,
         input: './images',
         list: false,

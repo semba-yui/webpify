@@ -260,5 +260,50 @@ describe('Reporter', () => {
       const output = stdoutWriteSpy.mock.calls.map((call) => call[0]).join('');
       expect(output).toContain('512 B');
     });
+
+    // Given: basePath が指定された場合
+    // When: reportImageList を呼び出す
+    // Then: 相対パスが表示される
+    it('should display relative paths when basePath is provided', () => {
+      const items: ImageListItem[] = [
+        { height: 600, path: '/project/images/subdir/image1.webp', size: 10240, width: 800 },
+        { height: 1080, path: '/project/images/another/image2.webp', size: 5120, width: 1920 },
+      ];
+
+      reporter.reportImageList(items, '/project/images');
+
+      const output = stdoutWriteSpy.mock.calls.map((call) => call[0]).join('');
+      expect(output).toContain('subdir/image1.webp');
+      expect(output).toContain('another/image2.webp');
+      expect(output).not.toContain('/project/images/subdir');
+    });
+
+    // Given: basePath が指定されない場合
+    // When: reportImageList を呼び出す
+    // Then: 絶対パスが表示される
+    it('should display absolute paths when basePath is not provided', () => {
+      const items: ImageListItem[] = [
+        { height: 600, path: '/project/images/subdir/image1.webp', size: 10240, width: 800 },
+      ];
+
+      reporter.reportImageList(items);
+
+      const output = stdoutWriteSpy.mock.calls.map((call) => call[0]).join('');
+      expect(output).toContain('/project/images/subdir/image1.webp');
+    });
+
+    // Given: 長いパスがある場合
+    // When: reportImageList を呼び出す
+    // Then: パスが省略記号で切り詰められる
+    it('should truncate long paths with ellipsis', () => {
+      const longPath = `/project/images/${'a/'.repeat(30)}image.webp`;
+      const items: ImageListItem[] = [{ height: 600, path: longPath, size: 10240, width: 800 }];
+
+      reporter.reportImageList(items, '/project/images');
+
+      const output = stdoutWriteSpy.mock.calls.map((call) => call[0]).join('');
+      expect(output).toContain('...');
+      expect(output).toContain('image.webp');
+    });
   });
 });

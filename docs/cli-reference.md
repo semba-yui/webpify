@@ -15,6 +15,7 @@ webpify のすべてのコマンドとオプションの詳細な説明です。
   - [`-r, --recursive`](#-r---recursive)
   - [`-f, --force`](#-f---force)
   - [`--list`](#--list)
+  - [`--absolute`](#--absolute)
   - [`--quiet`](#--quiet)
   - [`-v, --version`](#-v---version)
   - [`-h, --help`](#-h---help)
@@ -95,6 +96,7 @@ webpify ./assets/photos
 | `--recursive`     | `-r` | boolean | false | 再帰的に処理        |
 | `--force`         | `-f` | boolean | false | 既存ファイルを上書き    |
 | `--list`          | -    | boolean | false | WebP ファイル一覧表示 |
+| `--absolute`      | -    | boolean | false | 一覧表示時に絶対パスで表示 |
 | `--quiet`         | -    | boolean | false | 統計情報を非表示      |
 | `--version`       | `-v` | -       | -     | バージョン表示       |
 | `--help`          | `-h` | -       | -     | ヘルプ表示         |
@@ -175,6 +177,8 @@ webpify ./images -f
 
 - 変換処理は実行されません
 - `-r` と組み合わせてサブディレクトリも対象にできます
+- デフォルトで相対パスを表示（サブディレクトリ内のファイルを区別可能）
+- `--absolute` と組み合わせて絶対パス表示も可能
 
 ```bash
 # カレントディレクトリの WebP を一覧
@@ -182,15 +186,33 @@ webpify . --list
 
 # サブディレクトリも含めて一覧
 webpify ./images --list -r
+
+# 絶対パスで一覧表示
+webpify ./images --list -r --absolute
 ```
 
 #### 出力例
 
 ```
-File                    Size        Width   Height
-image1.webp            45.00 KB     1920    1080
-image2.webp            32.50 KB     1280     720
-banner.webp            12.30 KB      800     600
+File                       Size        Width   Height
+image1.webp               45.00 KB     1920    1080
+subdir/image2.webp        32.50 KB     1280     720
+subdir/nested/banner.webp 12.30 KB      800     600
+```
+
+### `--absolute`
+
+`--list` オプション使用時に、相対パスではなく絶対パスでファイルを表示します。
+
+- `--list` オプションと組み合わせて使用
+- 指定しない場合は入力ディレクトリからの相対パスを表示
+
+```bash
+# 絶対パスで一覧表示
+webpify ./images --list --absolute
+
+# 再帰 + 絶対パス
+webpify ./images --list -r --absolute
 ```
 
 ### `--quiet`
@@ -271,9 +293,9 @@ Total size reduction: 2.50 MB (65.0%)
 ### 一覧表示（--list）
 
 ```bash
-File                    Size        Width   Height
-image1.webp            45.00 KB     1920    1080
-image2.webp            32.50 KB     1280     720
+File                       Size        Width   Height
+image1.webp               45.00 KB     1920    1080
+subdir/image2.webp        32.50 KB     1280     720
 ```
 
 ### スキップ時
