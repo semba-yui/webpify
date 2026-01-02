@@ -51,6 +51,7 @@ describe('ArgumentParser', () => {
         expect(result.force).toBe(false);
         expect(result.quiet).toBe(false);
         expect(result.list).toBe(false);
+        expect(result.absolutePath).toBe(false);
         expect(result.output).toBeUndefined();
       });
     });
@@ -201,6 +202,21 @@ describe('ArgumentParser', () => {
       });
     });
 
+    // 絶対パス表示オプションの指定ができること
+    describe('Given --absolute オプションが指定された場合', () => {
+      it('When parse を呼び出すと Then absolutePath が true になる', () => {
+        // Given
+        const parser = createArgumentParser();
+        const argv = ['node', 'webpify', '--list', '--absolute', './images'];
+
+        // When
+        const result = parser.parse(argv);
+
+        // Then
+        expect(result.absolutePath).toBe(true);
+      });
+    });
+
     // 複数オプションの組み合わせができること
     describe('Given 複数のオプションが組み合わせて指定された場合', () => {
       it('When parse を呼び出すと Then すべてのオプションが正しく設定される', () => {
@@ -242,6 +258,7 @@ describe('ArgumentParser', () => {
         expect(output).toContain('--force');
         expect(output).toContain('--quiet');
         expect(output).toContain('--list');
+        expect(output).toContain('--absolute');
         expect(output).toContain('--help');
         expect(output).toContain('--version');
       });

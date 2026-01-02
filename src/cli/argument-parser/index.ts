@@ -78,6 +78,7 @@ export function createArgumentParser(): ArgumentParserService {
     .option('-f, --force', '既存ファイルを上書き', false)
     .option('--quiet', 'サイレントモード（出力なし）', false)
     .option('--list', 'WebP ファイルをサイズ情報付きで一覧表示', false)
+    .option('--absolute', '--list オプション使用時に絶対パスで表示', false)
     .configureOutput({
       writeErr: (str) => process.stderr.write(str),
       writeOut: (str) => process.stdout.write(str),
@@ -90,6 +91,7 @@ export function createArgumentParser(): ArgumentParserService {
       if (argv.length <= 2) {
         program.outputHelp();
         return {
+          absolutePath: false,
           force: false,
           input: '',
           list: false,
@@ -108,6 +110,7 @@ export function createArgumentParser(): ArgumentParserService {
           const code = (err as { code: string }).code;
           if (code === 'commander.helpDisplayed' || code === 'commander.version') {
             return {
+              absolutePath: false,
               force: false,
               input: '',
               list: false,
@@ -124,6 +127,7 @@ export function createArgumentParser(): ArgumentParserService {
       const args = program.args;
 
       return {
+        absolutePath: options['absolute'] as boolean,
         force: options['force'] as boolean,
         input: args[0] || '',
         list: options['list'] as boolean,

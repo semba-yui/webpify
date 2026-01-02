@@ -95,6 +95,8 @@ export interface ParsedOptions {
   quiet: boolean;
   /** WebP ファイル一覧表示モード */
   list: boolean;
+  /** 一覧表示時に絶対パスで表示するか */
+  absolutePath: boolean;
 }
 
 /**

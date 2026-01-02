@@ -1,3 +1,4 @@
+import path from 'node:path';
 import type { ConverterService, FileScannerService, ImageInspectorService } from '../../core/index.js';
 import type { ConversionResult, ImageListItem } from '../../types/index.js';
 import type { ArgumentParserService } from '../argument-parser/index.js';
@@ -47,7 +48,7 @@ export function createMain(deps: MainDependencies): MainService {
   /**
    * 一覧表示モードを実行する
    */
-  async function executeListMode(inputPath: string, recursive: boolean): Promise<number> {
+  async function executeListMode(inputPath: string, recursive: boolean, absolutePath: boolean): Promise<number> {
     const files = await fileScanner.scan(inputPath, {
       extensions: WEBP_EXTENSIONS,
       recursive,
@@ -62,7 +63,9 @@ export function createMain(deps: MainDependencies): MainService {
       width: info.width,
     }));
 
-    reporter.reportImageList(items);
+    // absolutePath が false の場合は basePath を渡して相対パスを表示
+    const basePath = absolutePath ? undefined : path.resolve(inputPath);
+    reporter.reportImageList(items, basePath);
     return 0;
   }
 
@@ -149,17 +152,21 @@ export function createMain(deps: MainDependencies): MainService {
         if (!isDir) {
           // 単一ファイルの場合も一覧表示
           const info = await imageInspector.getInfo(options.input);
-          reporter.reportImageList([
-            {
-              height: info.height,
-              path: info.path,
-              size: info.size,
-              width: info.width,
-            },
-          ]);
+          const basePath = options.absolutePath ? undefined : path.dirname(path.resolve(options.input));
+          reporter.reportImageList(
+            [
+              {
+                height: info.height,
+                path: info.path,
+                size: info.size,
+                width: info.width,
+              },
+            ],
+            basePath,
+          );
           return 0;
         }
-        return executeListMode(options.input, options.recursive);
+        return executeListMode(options.input, options.recursive, options.absolutePath);
       }
 
       // ファイル or ディレクトリの判定

@@ -29,8 +29,9 @@ export interface ReporterService {
   /**
    * WebP ファイル一覧を表示する
    * @param items - 画像アイテムのリスト
+   * @param basePath - 相対パス計算の基準パス（省略時は絶対パスを表示）
    */
-  reportImageList(items: ImageListItem[]): void;
+  reportImageList(items: ImageListItem[], basePath?: string): void;
 }
 
 /**
@@ -95,21 +96,41 @@ export function createReporter(): ReporterService {
       process.stdout.write(`Converted: ${fileName} (${inputSizeStr} -> ${outputSizeStr}, ${reduction})\n`);
     },
 
-    reportImageList(items: ImageListItem[]): void {
+    reportImageList(items: ImageListItem[], basePath?: string): void {
       if (items.length === 0) {
         process.stdout.write('WebP ファイルが見つかりません\n');
         return;
       }
 
-      process.stdout.write('\n--- WebP File List ---\n');
-      process.stdout.write(`${'File'.padEnd(40)} ${'Size'.padEnd(12)} ${'Width'.padEnd(8)} ${'Height'.padEnd(8)}\n`);
-      process.stdout.write(`${'-'.repeat(70)}\n`);
+      // 表示用パスを計算（basePath が指定されていれば相対パス、なければ絶対パス）
+      const displayPaths = items.map((item) => {
+        if (basePath) {
+          const relativePath = path.relative(basePath, item.path);
+          return relativePath || path.basename(item.path);
+        }
+        return item.path;
+      });
 
-      for (const item of items) {
-        const fileName = path.basename(item.path);
+      // 動的なカラム幅を計算（最小20、最大60文字）
+      const maxPathLength = Math.max(...displayPaths.map((p) => p.length));
+      const pathColumnWidth = Math.min(Math.max(maxPathLength + 2, 20), 60);
+
+      process.stdout.write('\n--- WebP File List ---\n');
+      process.stdout.write(
+        `${'File'.padEnd(pathColumnWidth)} ${'Size'.padEnd(12)} ${'Width'.padEnd(8)} ${'Height'.padEnd(8)}\n`,
+      );
+      process.stdout.write(`${'-'.repeat(pathColumnWidth + 30)}\n`);
+
+      for (const [index, item] of items.entries()) {
+        const displayPath = displayPaths[index] ?? '';
         const sizeStr = formatSize(item.size);
+
+        // 長いパスは省略表示
+        const truncatedPath =
+          displayPath.length > pathColumnWidth - 2 ? `...${displayPath.slice(-(pathColumnWidth - 5))}` : displayPath;
+
         process.stdout.write(
-          `${fileName.padEnd(40)} ${sizeStr.padEnd(12)} ${String(item.width).padEnd(8)} ${String(item.height).padEnd(8)}\n`,
+          `${truncatedPath.padEnd(pathColumnWidth)} ${sizeStr.padEnd(12)} ${String(item.width).padEnd(8)} ${String(item.height).padEnd(8)}\n`,
         );
       }
     },

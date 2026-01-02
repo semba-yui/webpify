@@ -60,6 +60,7 @@ webpify ./images -r
 | `-r, --recursive`    | 再帰的に処理        | false |
 | `-f, --force`        | 既存ファイルを上書き    | false |
 | `--list`             | WebP ファイル一覧表示 | -     |
+| `--absolute`         | 一覧表示時に絶対パスで表示 | false |
 | `--quiet`            | 統計情報を非表示      | false |
 | `-v, --version`      | バージョン表示       | -     |
 | `-h, --help`         | ヘルプ表示         | -     |
