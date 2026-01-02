@@ -124,6 +124,7 @@ describe('Converter', () => {
       // When: 変換を実行する
       const result = await converter.convert('/images/photo.png', {
         force: false,
+        lossless: false,
         quality: 80,
       });
 
@@ -148,11 +149,13 @@ describe('Converter', () => {
       // When: 変換を実行する
       await converter.convert('/path/to/image.jpeg', {
         force: false,
+        lossless: false,
         quality: 80,
       });
 
       // Then: 出力パスが正しい
       expect(mockImageProcessor.convertToWebP).toHaveBeenCalledWith('/path/to/image.jpeg', '/path/to/image.webp', {
+        lossless: false,
         quality: 80,
       });
     });
@@ -171,6 +174,7 @@ describe('Converter', () => {
       // When: 出力先を指定して変換を実行する
       const result = await converter.convert('/images/photo.png', {
         force: false,
+        lossless: false,
         output: '/output',
         quality: 80,
       });
@@ -178,6 +182,7 @@ describe('Converter', () => {
       // Then: 出力先ディレクトリにファイルが作成される
       expect(result.outputPath).toBe('/output/photo.webp');
       expect(mockImageProcessor.convertToWebP).toHaveBeenCalledWith('/images/photo.png', '/output/photo.webp', {
+        lossless: false,
         quality: 80,
       });
     });
@@ -194,6 +199,7 @@ describe('Converter', () => {
       // When: 存在しない出力先を指定して変換を実行する
       await converter.convert('/images/photo.png', {
         force: false,
+        lossless: false,
         output: '/nonexistent/output',
         quality: 80,
       });
@@ -217,6 +223,7 @@ describe('Converter', () => {
       // When: 既に存在する出力先を指定して変換を実行する
       await converter.convert('/images/photo.png', {
         force: false,
+        lossless: false,
         output: '/output',
         quality: 80,
       });
@@ -237,12 +244,37 @@ describe('Converter', () => {
       // When: 品質 90 で変換を実行する
       await converter.convert('/images/photo.png', {
         force: false,
+        lossless: false,
         quality: 90,
       });
 
       // Then: 品質パラメータが正しく渡される
       expect(mockImageProcessor.convertToWebP).toHaveBeenCalledWith('/images/photo.png', '/images/photo.webp', {
+        lossless: false,
         quality: 90,
+      });
+    });
+
+    // lossless パラメータが正しく渡されるテスト
+    it('lossless パラメータが ImageProcessor に正しく渡される', async () => {
+      // Given: 入力ファイルが存在し、出力ファイルは存在しない
+      vi.mocked(mockFileSystem.exists).mockImplementation(async (path) => {
+        return path === '/images/photo.png' || path === '/images';
+      });
+      vi.mocked(mockFileSystem.stat).mockResolvedValue({ size: 2048 });
+      vi.mocked(mockImageProcessor.convertToWebP).mockResolvedValue({ size: 1024 });
+
+      // When: lossless モードで変換を実行する
+      await converter.convert('/images/photo.png', {
+        force: false,
+        lossless: true,
+        quality: 100,
+      });
+
+      // Then: lossless パラメータが正しく渡される
+      expect(mockImageProcessor.convertToWebP).toHaveBeenCalledWith('/images/photo.png', '/images/photo.webp', {
+        lossless: true,
+        quality: 100,
       });
     });
 
@@ -258,6 +290,7 @@ describe('Converter', () => {
       // When: 変換を実行する
       const result = await converter.convert('/images/photo.backup.png', {
         force: false,
+        lossless: false,
         quality: 80,
       });
 
@@ -278,6 +311,7 @@ describe('Converter', () => {
       // When: force: false で変換を実行する
       const result = await converter.convert('/images/photo.png', {
         force: false,
+        lossless: false,
         quality: 80,
       });
 
@@ -300,12 +334,14 @@ describe('Converter', () => {
       // When: force: true で変換を実行する
       const result = await converter.convert('/images/photo.png', {
         force: true,
+        lossless: false,
         quality: 80,
       });
 
       // Then: スキップされず、変換処理が実行される
       expect(result.skipped).toBe(false);
       expect(mockImageProcessor.convertToWebP).toHaveBeenCalledWith('/images/photo.png', '/images/photo.webp', {
+        lossless: false,
         quality: 80,
       });
     });
@@ -318,6 +354,7 @@ describe('Converter', () => {
       // When: 変換を実行する
       const result = await converter.convert('/images/nonexistent.png', {
         force: false,
+        lossless: false,
         quality: 80,
       });
 
@@ -337,6 +374,7 @@ describe('Converter', () => {
       // When: BMP ファイルの変換を実行する
       const result = await converter.convert('/images/photo.bmp', {
         force: false,
+        lossless: false,
         quality: 80,
       });
 
@@ -360,6 +398,7 @@ describe('Converter', () => {
       // When: 変換を実行する
       const result = await converter.convert('/images/corrupted.png', {
         force: false,
+        lossless: false,
         quality: 80,
       });
 
@@ -382,6 +421,7 @@ describe('Converter', () => {
       // When: 変換を実行する
       const result = await converter.convert('/images/corrupted.png', {
         force: false,
+        lossless: false,
         quality: 80,
       });
 
@@ -416,7 +456,7 @@ describe('Converter', () => {
       vi.mocked(mockImageProcessor.convertToWebP).mockResolvedValue({ size: 1000 });
 
       // When: バッチ変換を実行する
-      const stats = await converter.convertBatch(inputPaths, { force: false, quality: 80 });
+      const stats = await converter.convertBatch(inputPaths, { force: false, lossless: false, quality: 80 });
 
       // Then: 統計情報が正しく集計される
       expect(stats.totalFiles).toBe(3);
@@ -440,7 +480,7 @@ describe('Converter', () => {
       vi.mocked(mockImageProcessor.convertToWebP).mockResolvedValue({ size: 1000 });
 
       // When: コールバック付きでバッチ変換を実行する
-      await converter.convertBatch(inputPaths, { force: false, quality: 80 }, progressCallback);
+      await converter.convertBatch(inputPaths, { force: false, lossless: false, quality: 80 }, progressCallback);
 
       // Then: コールバックが各ファイルに対して呼び出される
       expect(progressCallback).toHaveBeenCalledTimes(2);
@@ -471,7 +511,7 @@ describe('Converter', () => {
       vi.mocked(mockImageProcessor.convertToWebP).mockResolvedValue({ size: 1000 });
 
       // When: バッチ変換を実行する
-      const stats = await converter.convertBatch(inputPaths, { force: false, quality: 80 });
+      const stats = await converter.convertBatch(inputPaths, { force: false, lossless: false, quality: 80 });
 
       // Then: スキップと成功が正しくカウントされる
       expect(stats.totalFiles).toBe(2);
@@ -497,7 +537,7 @@ describe('Converter', () => {
       });
 
       // When: バッチ変換を実行する
-      const stats = await converter.convertBatch(inputPaths, { force: false, quality: 80 });
+      const stats = await converter.convertBatch(inputPaths, { force: false, lossless: false, quality: 80 });
 
       // Then: エラーが正しくカウントされる
       expect(stats.totalFiles).toBe(2);
@@ -511,7 +551,7 @@ describe('Converter', () => {
       // Given: 空のファイルリスト
 
       // When: バッチ変換を実行する
-      const stats = await converter.convertBatch([], { force: false, quality: 80 });
+      const stats = await converter.convertBatch([], { force: false, lossless: false, quality: 80 });
 
       // Then: すべてゼロの統計情報が返される
       expect(stats.totalFiles).toBe(0);

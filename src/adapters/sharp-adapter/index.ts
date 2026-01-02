@@ -10,9 +10,12 @@ export function createSharpAdapter(): ImageProcessorPort {
     async convertToWebP(
       inputPath: string,
       outputPath: string,
-      options: { quality: number },
+      options: { quality: number; lossless: boolean },
     ): Promise<{ size: number }> {
-      const result = await sharp(inputPath).webp({ quality: options.quality }).toFile(outputPath);
+      // lossless モードの場合は lossless: true を設定（quality は無視される）
+      // lossy モードの場合は quality を設定
+      const webpOptions = options.lossless ? { lossless: true } : { quality: options.quality };
+      const result = await sharp(inputPath).webp(webpOptions).toFile(outputPath);
 
       return { size: result.size };
     },

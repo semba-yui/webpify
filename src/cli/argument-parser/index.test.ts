@@ -52,6 +52,7 @@ describe('ArgumentParser', () => {
         expect(result.quiet).toBe(false);
         expect(result.list).toBe(false);
         expect(result.absolutePath).toBe(false);
+        expect(result.lossless).toBe(false);
         expect(result.output).toBeUndefined();
       });
     });
@@ -214,6 +215,21 @@ describe('ArgumentParser', () => {
 
         // Then
         expect(result.absolutePath).toBe(true);
+      });
+    });
+
+    // lossless オプションの指定ができること
+    describe('Given --lossless オプションが指定された場合', () => {
+      it('When parse を呼び出すと Then lossless が true になる', () => {
+        // Given
+        const parser = createArgumentParser();
+        const argv = ['node', 'webpify', 'input.png', '--lossless'];
+
+        // When
+        const result = parser.parse(argv);
+
+        // Then
+        expect(result.lossless).toBe(true);
       });
     });
 
