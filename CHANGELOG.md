@@ -4,6 +4,14 @@
 
 形式は [Keep a Changelog](https://keepachangelog.com/ja/1.1.0/) に基づいています。
 
+## \[1.2.0] - 2026-01-02
+
+### Added
+
+- `--lossless` オプションを追加（可逆圧縮モード）
+  - 元の画像データを完全に保持して WebP に変換
+  - `--quality` との同時指定時は警告を表示し lossless を優先
+
 ## \[1.1.0] - 2026-01-02
 
 ### Added

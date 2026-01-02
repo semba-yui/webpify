@@ -141,6 +141,7 @@ export function createConverter(deps: ConverterDependencies): ConverterService {
       // WebP に変換
       try {
         const result = await imageProcessor.convertToWebP(inputPath, outputPath, {
+          lossless: options.lossless,
           quality: options.quality,
         });
 

@@ -122,8 +122,8 @@ describe('SharpAdapter Unit Tests', () => {
   });
 
   describe('convertToWebP', () => {
-    // 品質パラメータが sharp に正しく渡されることをテスト
-    it('品質パラメータが sharp に正しく渡される', async () => {
+    // 品質パラメータが sharp に正しく渡されることをテスト（lossy モード）
+    it('lossy モードでは品質パラメータが sharp に正しく渡される', async () => {
       // Given: 正常に変換を行うモック
       const mockWebp = vi.fn().mockReturnThis();
       const mockToFile = vi.fn().mockResolvedValue({ size: 1024 });
@@ -135,11 +135,31 @@ describe('SharpAdapter Unit Tests', () => {
 
       const adapter = createSharpAdapter();
 
-      // When: 品質 75 で変換を実行
-      await adapter.convertToWebP('/input.png', '/output.webp', { quality: 75 });
+      // When: lossy モード（lossless: false）で品質 75 で変換を実行
+      await adapter.convertToWebP('/input.png', '/output.webp', { lossless: false, quality: 75 });
 
       // Then: webp() に品質パラメータが渡される
       expect(mockWebp).toHaveBeenCalledWith({ quality: 75 });
+    });
+
+    // lossless モードの場合に lossless: true が渡されることをテスト
+    it('lossless モードでは lossless: true が sharp に渡される', async () => {
+      // Given: 正常に変換を行うモック
+      const mockWebp = vi.fn().mockReturnThis();
+      const mockToFile = vi.fn().mockResolvedValue({ size: 2048 });
+
+      vi.mocked(sharp).mockReturnValue({
+        toFile: mockToFile,
+        webp: mockWebp,
+      } as unknown as ReturnType<typeof sharp>);
+
+      const adapter = createSharpAdapter();
+
+      // When: lossless モードで変換を実行
+      await adapter.convertToWebP('/input.png', '/output.webp', { lossless: true, quality: 100 });
+
+      // Then: webp() に lossless: true が渡される（quality は無視される）
+      expect(mockWebp).toHaveBeenCalledWith({ lossless: true });
     });
   });
 });

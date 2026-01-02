@@ -9,10 +9,12 @@ export type SupportedFormat = 'png' | 'jpeg' | 'jpg' | 'gif';
 export interface ConvertOptions {
   /** 出力先パス（省略時は入力ファイルと同じディレクトリ） */
   output?: string | undefined;
-  /** 変換品質（1-100、デフォルト: 80） */
+  /** 変換品質（1-100、デフォルト: 100） */
   quality: number;
   /** 既存ファイルを上書きするかどうか */
   force: boolean;
+  /** lossless（可逆圧縮）モードで変換するかどうか */
+  lossless: boolean;
 }
 
 /**
@@ -97,6 +99,8 @@ export interface ParsedOptions {
   list: boolean;
   /** 一覧表示時に絶対パスで表示するか */
   absolutePath: boolean;
+  /** lossless（可逆圧縮）モードで変換するか */
+  lossless: boolean;
 }
 
 /**

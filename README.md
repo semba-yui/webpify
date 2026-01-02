@@ -26,6 +26,7 @@ webpify は画像ファイル（PNG/JPEG/GIF）を WebP 形式に変換する CL
 - 単一ファイルまたはディレクトリ一括変換
 - 再帰的なディレクトリ走査
 - 品質パラメータの指定（1-100）
+- lossless（可逆圧縮）モード対応
 - 出力先ディレクトリの指定
 - 既存ファイルの上書き制御
 - WebP ファイル一覧表示
@@ -53,17 +54,18 @@ webpify ./images -r
 
 ### オプション
 
-| オプション                | 説明            | デフォルト |
-| -------------------- | ------------- | ----- |
-| `-o, --output <dir>` | 出力先ディレクトリ     | 入力と同じ |
-| `-q, --quality <n>`  | 品質（1-100）     | 100   |
-| `-r, --recursive`    | 再帰的に処理        | false |
-| `-f, --force`        | 既存ファイルを上書き    | false |
-| `--list`             | WebP ファイル一覧表示 | -     |
-| `--absolute`         | 一覧表示時に絶対パスで表示 | false |
-| `--quiet`            | 統計情報を非表示      | false |
-| `-v, --version`      | バージョン表示       | -     |
-| `-h, --help`         | ヘルプ表示         | -     |
+| オプション                | 説明              | デフォルト |
+| -------------------- | --------------- | ----- |
+| `-o, --output <dir>` | 出力先ディレクトリ       | 入力と同じ |
+| `-q, --quality <n>`  | 品質（1-100）       | 100   |
+| `-r, --recursive`    | 再帰的に処理          | false |
+| `-f, --force`        | 既存ファイルを上書き      | false |
+| `--lossless`         | 可逆圧縮モードで変換      | false |
+| `--list`             | WebP ファイル一覧表示   | -     |
+| `--absolute`         | 一覧表示時に絶対パスで表示   | false |
+| `--quiet`            | 統計情報を非表示        | false |
+| `-v, --version`      | バージョン表示         | -     |
+| `-h, --help`         | ヘルプ表示           | -     |
 
 ### 例
 
@@ -73,6 +75,9 @@ webpify image.png -q 90
 
 # 別ディレクトリに出力
 webpify ./images -o ./webp-images
+
+# lossless（可逆圧縮）モードで変換
+webpify image.png --lossless
 
 # 強制上書き + 再帰 + 静音
 webpify ./images -r -f --quiet

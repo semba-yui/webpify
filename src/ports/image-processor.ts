@@ -10,7 +10,11 @@ export interface ImageProcessorPort {
    * @param options 変換オプション
    * @returns 変換後のファイルサイズ情報
    */
-  convertToWebP(inputPath: string, outputPath: string, options: { quality: number }): Promise<{ size: number }>;
+  convertToWebP(
+    inputPath: string,
+    outputPath: string,
+    options: { quality: number; lossless: boolean },
+  ): Promise<{ size: number }>;
 
   /**
    * 画像のメタデータを取得する

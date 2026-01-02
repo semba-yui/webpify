@@ -14,6 +14,7 @@ webpify のすべてのコマンドとオプションの詳細な説明です。
   - [`-q, --quality <n>`](#-q---quality-n)
   - [`-r, --recursive`](#-r---recursive)
   - [`-f, --force`](#-f---force)
+  - [`--lossless`](#--lossless)
   - [`--list`](#--list)
   - [`--absolute`](#--absolute)
   - [`--quiet`](#--quiet)
@@ -95,6 +96,7 @@ webpify ./assets/photos
 | `--quality <n>`   | `-q` | number  | 100   | 品質レベル（1-100）  |
 | `--recursive`     | `-r` | boolean | false | 再帰的に処理        |
 | `--force`         | `-f` | boolean | false | 既存ファイルを上書き    |
+| `--lossless`      | -    | boolean | false | 可逆圧縮モードで変換    |
 | `--list`          | -    | boolean | false | WebP ファイル一覧表示 |
 | `--absolute`      | -    | boolean | false | 一覧表示時に絶対パスで表示 |
 | `--quiet`         | -    | boolean | false | 統計情報を非表示      |
@@ -170,6 +172,33 @@ webpify image.png -f
 # ディレクトリ変換で上書き
 webpify ./images -f
 ```
+
+### `--lossless`
+
+可逆圧縮（lossless）モードで変換します。
+
+- 元の画像データを完全に保持します
+- ファイルサイズは元より大きくなる場合があります（特に JPEG からの変換時）
+- `--quality` オプションと同時に指定した場合、警告を表示し lossless を優先します
+
+```bash
+# lossless モードで変換
+webpify image.png --lossless
+
+# ディレクトリを lossless で変換
+webpify ./images --lossless
+
+# --quality と同時指定（警告が表示され、lossless が優先）
+webpify image.png --lossless --quality 80
+# 警告: --lossless と --quality が同時に指定されています。lossless モードでは quality は無視されます。
+```
+
+**用途**:
+
+- 画像アーカイブ
+- 原本の保存
+- PNG からの変換（品質劣化なし）
+- 画質を一切落としたくない場合
 
 ### `--list`
 

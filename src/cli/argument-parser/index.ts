@@ -76,6 +76,7 @@ export function createArgumentParser(): ArgumentParserService {
     .option('-q, --quality <number>', '品質レベル (1-100)', parseQuality, DEFAULT_QUALITY)
     .option('-r, --recursive', 'ディレクトリを再帰的に処理', false)
     .option('-f, --force', '既存ファイルを上書き', false)
+    .option('--lossless', 'lossless（可逆圧縮）モードで変換', false)
     .option('--quiet', 'サイレントモード（出力なし）', false)
     .option('--list', 'WebP ファイルをサイズ情報付きで一覧表示', false)
     .option('--absolute', '--list オプション使用時に絶対パスで表示', false)
@@ -95,6 +96,7 @@ export function createArgumentParser(): ArgumentParserService {
           force: false,
           input: '',
           list: false,
+          lossless: false,
           quality: DEFAULT_QUALITY,
           quiet: false,
           recursive: false,
@@ -114,6 +116,7 @@ export function createArgumentParser(): ArgumentParserService {
               force: false,
               input: '',
               list: false,
+              lossless: false,
               quality: DEFAULT_QUALITY,
               quiet: false,
               recursive: false,
@@ -131,6 +134,7 @@ export function createArgumentParser(): ArgumentParserService {
         force: options['force'] as boolean,
         input: args[0] || '',
         list: options['list'] as boolean,
+        lossless: options['lossless'] as boolean,
         output: options['output'] as string | undefined,
         quality: options['quality'] as number,
         quiet: options['quiet'] as boolean,

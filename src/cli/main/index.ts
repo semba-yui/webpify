@@ -78,9 +78,11 @@ export function createMain(deps: MainDependencies): MainService {
     force: boolean,
     output: string | undefined,
     quiet: boolean,
+    lossless: boolean,
   ): Promise<number> {
     const result = await converter.convert(inputPath, {
       force,
+      lossless,
       output,
       quality,
     });
@@ -100,6 +102,7 @@ export function createMain(deps: MainDependencies): MainService {
     output: string | undefined,
     recursive: boolean,
     quiet: boolean,
+    lossless: boolean,
   ): Promise<number> {
     const files = await fileScanner.scan(inputPath, {
       extensions: CONVERT_EXTENSIONS,
@@ -120,7 +123,7 @@ export function createMain(deps: MainDependencies): MainService {
       }
     };
 
-    const stats = await converter.convertBatch(files, { force, output, quality }, onProgress);
+    const stats = await converter.convertBatch(files, { force, lossless, output, quality }, onProgress);
 
     if (!quiet) {
       reporter.reportStats(stats);
@@ -144,6 +147,13 @@ export function createMain(deps: MainDependencies): MainService {
       if (!exists) {
         process.stderr.write(`Error: File not found: ${options.input}\n`);
         return 1;
+      }
+
+      // lossless と quality の同時指定時に警告を出す（quality がデフォルト値でない場合）
+      if (options.lossless && options.quality !== 100 && !options.quiet) {
+        process.stderr.write(
+          '警告: --lossless と --quality が同時に指定されています。lossless モードでは quality は無視されます。\n',
+        );
       }
 
       // 一覧表示モード（--list オプション）
@@ -181,11 +191,19 @@ export function createMain(deps: MainDependencies): MainService {
           options.output,
           options.recursive,
           options.quiet,
+          options.lossless,
         );
       }
 
       // 単一ファイル変換モード
-      return executeSingleFileMode(options.input, options.quality, options.force, options.output, options.quiet);
+      return executeSingleFileMode(
+        options.input,
+        options.quality,
+        options.force,
+        options.output,
+        options.quiet,
+        options.lossless,
+      );
     },
   };
 }
