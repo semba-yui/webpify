@@ -1,4 +1,13 @@
-# 変更履歴
+# Changelog
+
+## [1.0.9](https://github.com/semba-yui/webpify/compare/v1.0.8...v1.0.9) (2026-01-02)
+
+
+### Bug Fixes
+
+* pnpm publish ([1736b64](https://github.com/semba-yui/webpify/commit/1736b64969f82004fd17b44ad012c216951e53e6))
+
+## 変更履歴
 
 すべての重要な変更はこのファイルに記録されます。
 
