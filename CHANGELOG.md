@@ -4,6 +4,12 @@
 
 形式は [Keep a Changelog](https://keepachangelog.com/ja/1.1.0/) に基づいています。
 
+## \[1.0.9] - 2026-01-02
+
+### Fixed
+
+- npx で起動しない問題を改善
+
 ## \[1.0.8] - 2026-01-02
 
 ### Fixed
